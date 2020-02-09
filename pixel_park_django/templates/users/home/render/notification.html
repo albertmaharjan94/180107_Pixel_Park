@@ -1,0 +1,92 @@
+{% for n in notifications %}
+{% if n.type in "like" %}
+<div class="row py-2 m-0">
+    <div class="col-md-2">
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <img class="rounded-circle icon-image" src="/static/images/{{ n.user_image }}">
+        </div>
+    </div>
+    <div class="col-md-8 px-0 notification-text pb-2">
+        <div class="img-post-caption h-100 d-flex align-items-center">
+           <div class="row">
+                <div class="col-md-12">
+                    <p class="m-0"><strong><a href="/profile/{{ n.user_id }}" class="p-0">{{ n.user_name }}</a></strong> has liked your photo</p>
+                </div>
+                <div class="col-md-12">
+                    <small><p class="m-0">{{ n.date }}</p></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <img class="icon-image" src="/static/images/{{ n.post_image }}">
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if n.type in "comment" %}
+<div class="row py-2 m-0">
+    <div class="col-md-2">
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <img class="rounded-circle icon-image" src="/static/images/{{ n.user_image }}">
+        </div>
+    </div>
+    <div class="col-md-8 px-0 notification-text pb-2">
+        <div class="img-post-caption h-100 d-flex align-items-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="m-0"><strong><a href="/profile/{{ n.user_id }}" class="p-0">{{ n.user_name }}</a></strong> has commented on your photo</p>
+                </div>
+                <div class="col-md-12">
+                    <small><p class="m-0">{{ n.date }}</p></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <img class="icon-image" src="/static/images/{{ n.post_image }}">
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if n.type in "follow" %}
+<div class="row py-2 m-0">
+    <div class="col-md-2">
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <img class="rounded-circle icon-image" src="/static/images/{{ n.image }}">
+        </div>
+    </div>
+    <div class="col-md-8 px-0 notification-text pb-2">
+        <div class="img-post-caption h-100 d-flex align-items-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="m-0"><strong><a href="/profile/{{ n.user_id }}" class="p-0">{{ n.user_name }}</a></strong> has followed you</p>
+                </div>
+                <div class="col-md-12">
+                    <small><p class="m-0">{{ n.date }}</p></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    <div class="col-md-2">-->
+<!--        <div class="h-100 d-flex justify-content-center align-items-center">-->
+<!--            <img class="icon-image" src="/static/images/{{ n.image }}">-->
+<!--        </div>-->
+<!--    </div>-->
+</div>
+{% endif %}
+
+{% endfor %}
+
+<div class="row px-2 py-0">
+    <div class="col-md-12 notification-text no-border-bottom">
+        <div class="h-100 d-flex justify-content-center align-items-center">
+            <a href="#" class="text-primary">All Notifications</a>
+        </div>
+    </div>
+</div>

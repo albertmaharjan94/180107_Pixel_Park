@@ -1,0 +1,36 @@
+<div class="col-md-12">
+    {% for f in follow %}
+    <div class="row my-2" style="height: 50px;">
+        <div class="col-8 align-items-center d-flex">
+            <div class="rounded float-left icon-image">
+                <img src="/static/images/{{ f.follower.image }}" class="rounded-circle icon-image">
+            </div>
+            <div class="pl-2 h-100 float-left d-flex align-items-center">
+                <span class="d-block"><a href="/profile/{{ f.follower.id }}">{{ f.follower.name }}</a></span>
+            </div>
+        </div>
+        <div class="col-4 align-items-center d-flex justify-content-end follow-button">
+            {% if f.follower.id is not user.id %}
+            {% if f.follower.id in follower_list %}
+             <form method="post" action="/profile/unfollow">
+                {% csrf_token %}
+                <input type="text" hidden name="profile_id" value="{{ f.follower.id }}">
+                <button type="submit" class="follow-button btn btn-secondary">Unfollow</button></a>
+            </form>
+            {% else %}
+            <form method="post" action="/profile/follow">
+                {% csrf_token %}
+                <input type="text" hidden name="profile_id" value="{{ f.follower.id }}">
+                <button type="submit" class="follow-button btn btn-primary">Follow</button></a>
+            </form>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="row my-2 " style="height: 50px;">
+        <label class="text-secondary text-center w-100">Currently no followers. Be the first to follow.</label>
+    </div>
+    {% endfor %}
+
+</div>

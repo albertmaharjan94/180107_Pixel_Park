@@ -1,0 +1,49 @@
+{% extends 'layouts/home.html' %}
+{% block title %}{{ user.name }} - @{{ user.username }} | PixelPark {% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row mt-4 px-5">
+        <div class="col-md-6 ">
+            <h2>Edit Profile</h2>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-12">
+            <form action="/profile/{{ user.id }}/update" method="POST" id="reg-form">
+                {% csrf_token %}
+                <div class="form-group mt-1">
+                    <label>Email</label>
+                    <input class="form-control" type="email" name="email" value="{{ user.email }}" placeholder="Email" required="">
+                </div>
+                <div class="form-group mt-1">
+                    <label>Username</label>
+                    <input class="form-control" type="text" name="username" value="{{ user.username }}" placeholder="Username" required="">
+                </div>
+                <div class="form-group mt-1">
+                    <label>Full Name</label>
+                    <input class="form-control" type="text" name="name" value="{{ user.name }}" placeholder="Full Name" required="">
+                </div>
+                <div class="form-group mt-1">
+                    <label>Social Link</label>
+                    <input class="form-control" type="text" name="social_link" value="{{ user.social_link }}" placeholder="Social Link" >
+                </div>
+                <div class="form-group mt-1 row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-block btn-primary">Update</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-block btn-warning">Cancel</button>
+                    </div>
+                </div>
+                <div class="mt-1 text-left">
+                    <a href="/login"><h5 class="text text-info">Click here to <strong>Change Password</strong></h5></a>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

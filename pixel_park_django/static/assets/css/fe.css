@@ -1,0 +1,356 @@
+/*CSS Starts Here*/
+html,body {
+  height: 100%;
+}
+body{
+    background-color: #f8f9fa !important;
+}
+@font-face {
+  font-family: 'nunitoregular';
+    src: url('assets/fonts/nunito/nunito-regular-webfont.woff2') format('woff2'),
+         url('assets/fonts/nunito/nunito-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+.heart-active{
+  color:#e1306c;
+}
+.nav-icon:hover,.icon-hover:hover,.icon-active{
+  background-color: #e7e7e7;
+}
+
+.carousel-caption{
+      bottom: 43%;
+      padding: 0;
+      margin: 0;
+  }
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+.search-inner{
+    border-bottom: 1px solid #ececec;
+}
+.search-inner:hover{
+    background-color:#ececec;
+}
+.image-post,.image-post-profile{
+   display: -webkit-box;      /* iOS 6-, Safari 3.1-6 */
+   display: -moz-box;         /* Firefox 19 */
+   display: -ms-flexbox;      /* IE 10 */
+   display: -webkit-flex;     /* Chrome */
+   display: flex;             /* Opera 12.1, Firefox 20+ */
+
+}
+.image-post {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px !important;
+  object-fit: cover; 
+  opacity: 1 !important;
+}
+.image-post-profile{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px !important;
+  object-fit: cover; 
+  opacity: 1 !important;
+}
+
+.carousel-indicators li {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+}
+
+/*login page image slider flex css*/
+.image-slide,.icon-image{
+   display: -webkit-box;      /* iOS 6-, Safari 3.1-6 */
+   display: -moz-box;         /* Firefox 19 */
+   display: -ms-flexbox;      /* IE 10 */
+   display: -webkit-flex;     /* Chrome */
+   display: flex;             /* Opera 12.1, Firefox 20+ */
+
+}
+.image-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  object-fit: cover; 
+}
+
+.video-slide{
+   width: 100%;
+  /*height: 100%;*/
+  object-fit: cover;
+  opacity: .5;
+}
+.carousel-item img{
+  opacity: .5;
+}
+.i-frame-format a{
+  text-decoration: none;
+  color:black;
+  font-size: 1.25rem;
+  display: inline-block;
+  padding-top: .3125rem;
+  padding-bottom: .3125rem;
+  /*margin-right: 1rem;*/
+  /*font-size: 1.25rem;*/
+  line-height: inherit;
+  white-space: nowrap;
+  
+}
+.i-frame-format{
+
+  width: auto !important;
+}
+.comment{
+  height: 48px !important;
+  text-indent: 15px;
+  border-radius: 0 0 5px 5px; 
+  border:none;
+}
+.img-post-time p{
+  font-size: 12px;
+  color: #a3a3a3;
+  margin-bottom: 0;
+  text-transform: uppercase;
+}
+.img-card{
+  height: auto;
+
+}
+.img-post{
+    border: 1px solid #e5e5e5;
+}
+.s-right{
+    left: auto;
+    position: fixed;
+    z-index: 0;
+    top: 57px;
+    height: 400px !important;
+}
+
+.profile-button button{
+  font-size:0.9rem;
+}
+
+.small-nav{
+  padding: 0;   
+}
+.dropdown-menu{
+    border: solid 1px #e6e6e6;
+    box-shadow: 0 0 10px #c0c0c0;
+}
+.dropdown-notification{
+  top: 140%;
+  right: -15px;
+  left: auto;
+  min-width: 30rem;
+}
+#nav-profile-menu{
+
+  min-width: 15rem;
+}
+
+.notification-text{
+  border-bottom: 1px #e7e7e7 solid
+}
+.notification-text p a{
+  font-size: 1rem
+}
+
+.no-border-bottom{
+  border-bottom: none !important;
+}
+.icon-image{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height:40px;
+  object-fit: cover; 
+}
+.icon-image-profile{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height:100px;
+  object-fit: cover; 
+}
+
+.icon-image-profile-main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height:250px;
+  object-fit: cover; 
+}
+
+/*profile*/
+.profile-username{
+  font-size: 2rem;
+  font-weight: 300;
+}
+.profile-name{
+  font-weight: 600;
+}
+.profile-name,.profile-text{
+  font-size: 1.2rem;
+}
+.profile-count{
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+/**/
+.no-border-bottom a{
+  font-size: 1rem;
+}
+.foot-card a{
+  text-decoration:none;
+}
+.follow-button button{
+  font-size: 0.8rem;
+}
+.image-post-profile,.icon-image-profile-main,.likes-text{
+  cursor: pointer;
+}
+
+.image-post-modal{
+  height: 600px !important;
+}
+
+.px-10px{
+  padding: 0 10px;
+}
+
+
+a:hover{
+  text-decoration: none;
+}
+.a-link-modal{
+  text-decoration: none !important;
+  color: black;
+}
+.b-top-comment{
+    border-top: 1px solid #ebecee;
+}
+
+
+
+
+
+.media-link button{
+  font-size: 20px;
+  width: 60px
+}
+
+
+
+
+
+@media screen and ( max-width: 500px ){
+    .card{
+      margin: 0 !important;
+      height: 100vh;
+      border-radius: 0px !important;
+    }
+    .form{
+      margin:0 !important;
+      padding: 0 !important;
+    }
+    .title{
+      margin-top: 100px;
+    }
+
+}
+
+@media screen and ( max-width: 650px ){
+  .icon-image-profile-main{
+      height: 100px;
+      width: 100px;
+  }
+
+}
+
+@media screen and (max-width: 1199.5px){
+  .image-profile-card{
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .big-nav{
+    display: none;
+  }
+  .small-nav{
+    display: block;
+  }
+  .s-right{
+    display: none;
+  }
+  .fe01-content{
+    padding: 0 !important;
+  }
+  .img-card{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .img-post,.profile-top{
+    margin: auto 0 !important;
+    /*height: 500px !important;*/
+  }
+}
+@media screen and (max-width:991.5px){
+  .image-post-profile{
+    height: 500px !important;
+  }
+}
+@media screen and (min-width: 1199.5px){
+  .big-nav{
+    display: block; 
+  }
+  .small-nav{
+    display: none;
+  }
+  .s-right{
+    display: block;
+  }
+}
+
+.no-opacity img{
+  opacity: 1 !important;
+}
+
+.caption-uppercase{
+  text-transform: uppercase;
+}
+.caption-effect{
+  bottom:0%;
+  width: 100%;
+  left: 0%;
+  background-color: #0000006b;
+}
+.caption-effect h5{
+  margin: .5rem 0;
+
+}
+/* [1] The container */
+.image-post-profile-parent {
+  overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+}
+
+/* [2] Transition property for smooth transformation of images */
+.image-post-profile-parent img {
+  transition: transform .8s ease;
+}
+
+/* [3] Finally, transforming the image when container gets hovered */
+.image-post-profile-parent:hover img {
+  transform: scale(1.2);
+}

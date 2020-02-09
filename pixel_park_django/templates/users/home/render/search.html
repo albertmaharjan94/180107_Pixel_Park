@@ -1,0 +1,32 @@
+<div class="overflow-auto" style="max-height:400px">
+    {% if search %}
+    {% for u in users|slice:"10" %}
+    <a href="/profile/{{ u.id }}">
+        <div class="col-md-12 py-3 align-items-center d-flex search-inner">
+            <div class="rounded float-left icon-image">
+                <img src="/static/images/{{ u.image }}" class="rounded-circle icon-image">
+            </div>
+            <div class="pl-2 h-100 float-left align-items-center ">
+                <span class="d-block text text-default">{{ u.username }}</span>
+
+                <small><span class="d-block">{{ u.name }}</span></small>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+        {% if not users %}
+        <div class="col-md-12 py-3 text-center">
+            <span >No result found</span>
+        </div>
+        {% endif %}
+    {% else %}
+    <div class="col-md-12 py-3 text-center">
+        <span class="" ">Please type to search</span>
+    </div>
+    {% endif %}
+</div>
+{% if users %}
+<div class="col-md-12 py-2 text-center">
+    <a href="#"><span class="d-block">See All</span></a>
+</div>
+{% endif %}

@@ -1,0 +1,39 @@
+<div class="col-md-12">
+    {% for l in likes %}
+    <div class="row my-2" style="height: 50px;">
+        <div class="col-8 align-items-center d-flex">
+            <div class="rounded float-left icon-image">
+                <img src="/static/images/{{ l.user.image }}" class="rounded-circle icon-image">
+            </div>
+            <div class="pl-2 h-100 float-left d-flex align-items-center">
+                <span class="d-block"><a href="/profile/{{ l.user.id }}">{{ l.user.name }}</a></span>
+            </div>
+        </div>
+        <div class="col-4 align-items-center d-flex justify-content-end follow-button">
+
+            {% if l.user.id is not user.id %}
+
+            {% if l.user.id in following_list %}
+            <form method="post" action="/profile/unfollow">
+                {% csrf_token %}
+                <input type="text" hidden name="profile_id" value="{{ l.user.id }}">
+                <button type="submit" class="follow-button btn btn-secondary">Unfollow</button></a>
+            </form>
+            {% else %}
+            <form method="post" action="/profile/follow">
+                {% csrf_token %}
+                <input type="text" hidden name="profile_id" value="{{ l.user.id }}">
+                <button type="submit" class="follow-button btn btn-primary">Follow</button></a>
+            </form>
+            {% endif %}
+
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="row my-2 " style="height: 50px;">
+        <label class="text-secondary text-center w-100">No likes yet. Be the first to like.</label>
+    </div>
+    {% endfor %}
+
+</div>

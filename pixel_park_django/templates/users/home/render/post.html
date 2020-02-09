@@ -1,0 +1,99 @@
+<div class="row">
+    <!-- image start -->
+    <div class="col-lg-12 col-md-12 w-100 pb-4">
+        <div class="bg-white rounded img-post-profile row">
+            <div class="col-md-8 p-0 w-100 image-slide" style="height: auto">
+                <!-- <img src="assets/img/login1.jpg" style="height: 350px"> -->
+
+                <!-- edit starts her -->
+                <div class="carousel slide carousel-fade w-100 c-1 " data-ride="carousel" data-interval="false">
+                    <ol class="carousel-indicators">
+                    {% for i in post.photo_set.all %}
+
+                        {% if forloop.first %}
+                        <li data-target=".c-1" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+                        {% else %}
+                        <li data-target=".c-1" data-slide-to="{{ forloop.counter0 }}"></li>
+                        {% endif %}
+
+                    {% endfor %}
+                    </ol>
+
+                    <div class="carousel-inner w-100">
+                        {% for i in post.photo_set.all %}
+                        {% if forloop.first %}
+                        <div class="carousel-item w-100 active">
+                        {% else %}
+                        <div class="carousel-item w-100">
+                        {% endif %}
+                            <img class="img-fluid image-post-profile image-post-modal w-100" src="/static/images/{{ i.photo }}" alt="{{ i.caption }}">
+                        </div>
+                        {% endfor %}
+
+                      </div>
+
+
+                      <a class="carousel-control-prev" href=".c-1" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="carousel-control-next" href=".c-1" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                </div>
+            <!-- edit ends -->
+            </div>
+            <!-- comments -->
+            <div class="col-md-4 p-0 ">
+
+                <div class="col-md-12 align-items-center d-flex" style="height: 50px; ">
+                    <div class="rounded float-left icon-image">
+                        <img src="/static/images/{{ post.user.image }}" class="rounded-circle icon-image">
+                    </div>
+                    <div class="pl-2 h-100 float-left d-flex align-items-center">
+                        <span><a href="#">{{ post.user.name }}</a></span>
+                    </div>
+                </div>
+                <div class="col-md-12 py-0 i-frame-format">
+                    <span class=""><a class="heart" href="#"><i class="far fa-heart"></i></a></span>
+
+                    <span class="ml-2"><a href="#" class="comment-icon" data-id='1'><i class="far fa-comment"></i></a></span>
+                </div>
+                <div class="col-md-12 py-0" >
+                    <div class="img-post-likes">
+                        <p class="my-0">0 likes</p>
+                    </div>
+                    <div class="img-post-caption">
+                        <a href="" class="d-inline">{{ post.user.name }}</a>
+                        <p class="d-inline">{{ post.caption }}</p>
+                    </div>
+                    <div class="img-post-comment">
+                        <div class="overflow-auto comment-{{ post.id }}" style="max-height: 80px;">
+                            {% for c in post.comment_set.all reversed %}
+                            <div class="img-post-comment">
+                                <a href="/profile/{{ c.user.id }}" class="d-inline">{{ c.user.username }}</a>
+                                <p class="d-inline">{{ c.title }}</p>
+                            </div>
+                            {% empty %}
+                            <span class="no-comment-{{ post.id }} text-secondary">No comments yet. Be the first to comment</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="img-post-time">
+                        <p class="d-inline">{{ post.date }}</p>
+                    </div>
+                </div>
+                <div class="col-md-12 my-1 px-0 b-top-comment" >
+                    <form>
+                        {% csrf_token %}
+                        <input style="background-color: #fafafa" data-post-id="{{ post.id }}" data-user-id="{{ user.id }}" class="comment w-100 post-1" placeholder="Add a comment" type="text" name="">
+                    </form>
+
+                </div>
+                <!-- comments end -->
+            </div>
+            <!-- end comments -->
+        </div>
+    </div>
+</div>

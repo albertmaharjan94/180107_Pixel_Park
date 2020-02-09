@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	{% load static %}
+	<!-- Bootstrap -->
+
+
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+
+	<!-- Core Css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/fe.css' %}">
+
+	<!-- Jquery 3.4 -->
+	<script type="text/javascript" src="{% static 'assets/js/jquery-3.4.1.slim.min.js' %}"></script>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	<div class="container-fluid h-100">
+	  <div class="row justify-content-center h-100">
+	    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 bg-light">
+	      <div class="form mt-5 pt-2">
+	      	<div class="row d-flex justify-content-center">
+	      		
+	      		<div class="col col-sm-8 col-md-8 col-xs-12 bg-white py-5 my-5 rounded card">
+
+	      			<!-- content -->
+
+	      			{% block content %}{% endblock %}
+	      			<!-- <div class="title">
+		      			<h3 class="py-2">Login Page</h3>
+		      		</div>
+			      	<form action="index.html">
+			      		<div class="form-group mt-1">
+			      			<input class="form-control" type="text" name="email" placeholder="Username or Email">
+			      		</div>
+			      		<div class="form-group mt-1">
+			      			<input class="form-control" type="password" name="email" placeholder="Password">
+			      		</div>
+			      		<div class="form-group mt-1">
+			      			<button class="btn btn-block btn-primary">Login</button>
+			      		</div>
+			      		<div class="mt-1 text-center mb-3">
+			      			<a href="forget.html">Forgot your password?</a>
+			      		</div>
+			      	</form>
+			      	<div>
+			      		<div class="mt-0">
+
+			      			<p class="mb-0">Don't have an account?</p><a class="link mt-0" href="signup.html">Sign Up</a>
+			      		</div>
+			      	</div> -->
+		      	</div>
+	      	</div>
+	      </div>
+	    </div>
+	    <div class="d-none d-lg-block col-lg-4 bg-dark px-0">
+	      <!-- Images -->
+
+	      	<video class="video-slide h-100 d-block" autoplay="autoplay" muted="" id="fullscreen-video" loop="loop">
+          	<!-- <source src="https://res.cloudinary.com/dexzikebv/video/upload/v1568685946/Alpas/Computer_Keyboard_-_3188.mp4"
+            type="video/mp4"> -->
+	            <source src="{% static 'assets/video/video1.mp4' %}" type="video/mp4">
+
+	        </video>
+	        <div class="carousel-caption">
+			    <h2>Create. Share. Post</h2>
+			    <p>Leave nothing but footprints. Take nothing but photographs.</p>
+		  	</div>
+
+	  </div>
+	</div>
+
+
+	<!-- Scripts -->
+	<!-- Bootstrap js -->
+	<script type="text/javascript" src="{% static 'assets/js/bootstrap.min.js' %}" ></script>
+
+	<!-- Pooper min -->
+	<script type="text/javascript" src="{% static 'assets/js/popper.min.js' %}"></script>
+
+	<script type="text/javascript">
+		$('.carousel').carousel()
+	</script>
+
+	{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,139 @@
+{% extends 'layouts/layout.html' %}
+
+{% block title %}
+Register | Pixel Park
+{% endblock %}
+
+{% block content %}
+<div class="title">
+	<h3 class="py-2">Signup Page</h3>
+</div>
+{% if messages %}
+
+<div class="alert px-0 py-0" role="alert">
+	<ul class="messages list-group">
+	    {% for message in messages %}
+	    <li{% if message.tags %} class="list-group-item list-group-item-danger {{ message.tags }}"{% endif %}>{{ message }}</li>
+	    {% endfor %}
+	</ul>
+</div>
+{% endif %}
+<form action="/register/store" method="POST" id="reg-form">
+	{% csrf_token %}
+	<div class="form-group mt-1">
+		<input class="form-control" type="email" name="email" placeholder="Email" required="">
+	</div>
+	<div class="form-group mt-1">
+		<input class="form-control" type="text" name="username" placeholder="Username" required="">
+	</div>
+	<div class="form-group mt-1">
+		<input class="form-control" type="text" name="name" placeholder="Full Name" required="">
+	</div>
+	<div class="form-group mt-1">
+		<input class="form-control" type="password" name="password" placeholder="Password" required="">
+	</div>
+	<div class="form-group mt-1">
+		<input class="form-control" type="password" name="confirm-password" placeholder="Confirm password" required="">
+		<div class="invalid-feedback feedback">
+	      
+    	</div>
+	</div>
+	<div class="form-group mt-1">
+		<button type="submit" class="btn btn-block btn-primary" id="reg-submit">Register</button>
+	</div>
+	<div class="mt-1 text-center">
+		<a href="/login">Already have an account?</a>
+	</div>
+	<div class="mt-1 text-center mb-3">
+		<p>By signing up, you agree to our <a href="">Terms and Policy</a>.</p>
+	</div>
+
+</form>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$('input[name="confirm-password"]').on('focus',function(e){
+		console.log('focu')
+		removeFeedback($(this))
+	});
+	$('input[name="confirm-password"]').on('focusout',function(e){
+		var password=$('input[name="password"]');
+		var cpassword=$('input[name="confirm-password"]');
+		
+		if(password.val() != cpassword.val()){
+			cpassword.addClass('is-invalid')
+			cpassword.parent().find('.feedback').html('Password didnot match')
+			return false
+		}
+		return true
+	})
+
+	
+	$('input[name="email"]').on('focus',function(e){
+		removeFeedback($(this))
+	});
+	$('input[name="email"]').on('focusout',function(e){
+		var email=$(this)
+		
+		$.ajax({
+			url: '/hasEmail',
+			dataType: 'JSON',
+			type: 'POST',
+			data:{
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+				email: email.val()
+			},
+			success:function(data){
+
+				if(data.data.status){
+
+					email.val("")
+					email.addClass('is-invalid')
+					email.parent().append(invalidFeedback('Email is already taken'))
+				}
+			}
+		})
+	})
+
+	$('input[name="username"]').on('focus',function(e){
+		removeFeedback($(this))
+	});
+	$('input[name="username"]').on('focusout',function(e){
+		var username=$(this)
+		
+		$.ajax({
+			url: '/hasUsername',
+			dataType: 'JSON',
+			type: 'POST',
+			data:{
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+				username: username.val()
+			},
+			success:function(data){
+
+				if(data.data.status){
+
+					username.val("")
+					username.addClass('is-invalid')
+					username.parent().append(invalidFeedback('Username already taken'))
+				}
+			}
+		})
+	})
+
+
+	function removeFeedback(element){
+		element.removeClass('is-invalid')
+		element.find('.feedback').html("")
+	}
+	function invalidFeedback(error){
+		html=`<div class="invalid-feedback feedback">
+			      ${error}
+		    	</div>`
+		 return html
+	}
+</script>
+{% endblock %}
