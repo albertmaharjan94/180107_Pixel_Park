@@ -1,9 +1,11 @@
 import os
+from calendar import calendar
 
 from django.contrib.messages.storage import session
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from django.utils.datetime_safe import datetime
+import calendar
+import time
 
 from ..authenticate.authenticate import Auth
 from django.template.loader import render_to_string
@@ -37,20 +39,39 @@ def index(request):
         follow = Follow.objects.filter(follower_id=request.session['user']).values_list('following_id', flat=True)
     except:
         follow = []
+
+    start = 0
+    offset = 2
+    order = '-date'
+    prev = 0
+    next = 1
+    is_last = True
+    if "page" in request.GET:
+        start = int(request.GET['page']) * 2
+        offset = int(start) + 2
+        prev = int(request.GET['page']) - 1
+        next = prev + 2
+
     try:
-        post = Post.objects.filter(Q(user_id__in=follow) | Q(user_id=request.session['user'])).order_by('-date')
-        # post = User.objects.get(id=2).post_set.all()
+        post = Post.objects.filter(Q(user_id__in=follow) | Q(user_id=request.session['user'])).order_by(order)
+        # return HttpResponse
+        if len(post)/ 2 <= next:
+            is_last = True
+        else:
+            is_last = False
+        post = post[start:offset]
     except:
-        request.session.flush()
-        return redirect('/login')
-
+        # request.session.flush()
+        # return redirect('/login')
+        pass
     # test
-
     # test end
     following_list = user.follower.all().values_list('following_id', flat=True)
     suggestion = User.objects.exclude(Q(id__in=following_list) | Q(id=user.id))
 
-    return render(request, 'users/home/index.html', {'user': user, 'posts': post, 'suggestions': suggestion})
+    return render(request, 'users/home/index.html',
+                  {'user': user, 'posts': post, 'suggestions': suggestion, 'prev': prev, 'next': next,
+                   'is_last': is_last,'start':start})
 
 
 @Auth.is_logged_in
@@ -130,7 +151,7 @@ def follower_list(request, id):
     follow = Follow.objects.filter(following_id=profile.id)
     follower_list = user.follower.filter(follower_id=user.id).values_list('following_id', flat=True)
     html = render_to_string('users/home/render/follower.html',
-                            {'follow': follow, 'user': user, 'follower_list': follower_list},request=request)
+                            {'follow': follow, 'user': user, 'follower_list': follower_list}, request=request)
     return JsonResponse({'html': html})
 
 
@@ -146,7 +167,7 @@ def following_list(request, id):
     following = Follow.objects.filter(follower_id=profile.id)
     following_list = user.follower.filter(follower_id=user.id).values_list('following_id', flat=True)
     html = render_to_string('users/home/render/following.html',
-                            {'following': following, 'user': user, 'following_list': following_list},request=request)
+                            {'following': following, 'user': user, 'following_list': following_list}, request=request)
     return JsonResponse({'html': html})
 
 
@@ -208,9 +229,11 @@ def profile_image_update(request, id):
             return redirect('/login')
         if user.image != 'user.png':
             user.image.delete(False)
+        # user.image = request.FILES['image']
 
-        user.image = request.FILES['image']
-        user.save()
+        ext = request.FILES[u'image'].name.split(".")[1].lower()
+        file_name = str(calendar.timegm(time.gmtime())) + "." + ext
+        user.image.save(file_name, request.FILES['image'], save=True)
         return redirect('/profile/' + str(user.id))
 
 

@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from ..authenticate.authenticate import Auth
 from ..models import Post, Photo
@@ -26,3 +26,11 @@ def upload(request):
     photo.save()
     photo.photo.save(file_name, data, save=True)
     return redirect('/index')
+
+def delete_post(request,id):
+    try:
+        p=Post.Post.objects.get(id=id)
+        p.delete()
+    except:
+        pass
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

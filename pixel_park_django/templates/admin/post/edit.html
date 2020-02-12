@@ -1,0 +1,57 @@
+{% extends "layouts/admin-layout.html" %}
+{% block posts %}active{% endblock %}
+{% block content %}
+
+ <!-- Page Heading -->
+
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-2 text-gray-800">Post</h1>
+  </div>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Edit a Post</h6>
+    </div>
+    <div class="card-body">
+      <form action="/admin/post/update/{{ p.id }}" method="post" enctype="multipart/form-data">
+      {%csrf_token %}
+          <div class="form-group">
+              <label>Caption</label><span class="asteriskField">*</span>
+              <input class="form-control" name="caption" type="text" value="{{ p.caption }}" required>
+          </div>
+        <div class="form-group">
+
+              <label>Image</label><span class="asteriskField">*</span>
+              <input id="file" class="form-control" type="file" name="image">
+              <img id="image" class="mt-3 img-profile rounded-circle icon-image" src="/static/images/{{ p.photo_set.first.photo  }}" style="height:100px; width:100px">
+          </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary ">
+            Submit
+            </button>
+            <a href="/admin/posts"><button type="button" class="btn btn-warning ">
+            Back
+            </button>
+            </a>
+        </div>
+
+      </form>
+
+
+
+    </div>
+  </div>
+
+<script>
+    document.getElementById("file").onchange = function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("image").src = e.target.result;
+        };
+
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    };
+</script>
+{% endblock %}

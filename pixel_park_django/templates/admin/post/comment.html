@@ -1,0 +1,102 @@
+{% extends "layouts/admin-layout.html" %}
+{% block posts %}active{% endblock %}
+{% block content %}
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Are you sure you want to delete this post?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <form action="/admin/posts/comment/delete" method="post">
+            {% csrf_token %}
+            <input hidden name="id" value="" id="comment_input">
+            <button class="btn btn-danger" href="">Delete</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Page Heading -->
+ <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+    <h1 class="h3 mb-2 text-gray-800">Comments</h1>
+    <a href="/admin/post/comment/create/{{ post.id }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> Add New</a>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">List of Comments for <strong>{{ post.caption }}</strong></h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Id</th>
+                <th>User</th>
+              <th>Image</th>
+              <th>Comment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Id</th>
+                <th>User</th>
+              <th>Image</th>
+              <th>Caption</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for c in post.comment_set.all %}
+              <tr>
+                <td>
+                  {{ c.id }}
+                </td>
+                <td>
+                  {{ c.user.username }}
+                </td>
+                <td class="justify-content-center align-items-center d-flex">
+                  <img class="img-profile rounded-circle icon-image" src="/static/images/{{  c.post.photo_set.first.photo }}">
+                </td>
+
+                <td>
+                  {{ c.title }}
+                </td>
+                <td>
+                  <a class="btn btn-warning btn-sm" title="Edit" href="/admin/post/edit-comment/{{ c.id }}"> <i class="fa fa-edit" style="color:white"></i> </a>
+                  <a class="btn btn-danger btn-sm btn-delete" data-id="{{ c.id }}" title="Delete"> <i class="fa fa-times" style="color:white"></i> </a>
+                </td>
+              </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<!--  datatable -->
+  <script src="/static/assets/js/jquery.dataTables.min.js"></script>
+  <script src="/static/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+
+  $('#dataTable').DataTable();
+  $(document).on('click','.btn-delete',function(e){
+    e.preventDefault();
+    var id=$(this).data('id')
+    console.log(id)
+    $("#comment_input").val(id)
+    $("#deleteModal").modal('show')
+  })
+</script>
+{% endblock %}

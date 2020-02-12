@@ -11,6 +11,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from ..templates.forms import users
 
 
+
 @Auth.is_guest
 def login(request):
     if request.method == 'GET':

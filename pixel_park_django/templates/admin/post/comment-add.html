@@ -1,0 +1,46 @@
+{% extends "layouts/admin-layout.html" %}
+{% block posts %}active{% endblock %}
+{% block content %}
+
+ <!-- Page Heading -->
+
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-2 text-gray-800">Comments</h1>
+  </div>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Add a Comment</h6>
+    </div>
+    <div class="card-body">
+      <form action="/admin/post/comment/store/{{ post.id }}" method="post">
+      {%csrf_token %}
+          <div class="form-group">
+
+              <label>Users</label><span class="asteriskField">*</span>
+              <select name="user_id" class="form-control">
+                  {% for user in users %}
+                  <option value="{{ user.id }}">{{ user.username }}</option>
+                  {% endfor %}
+              </select>
+          </div>
+          <div class="form-group">
+              <label>Comment</label><span class="asteriskField">*</span>
+              <input class="form-control" name="title" type="text" required>
+          </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary ">
+            Submit
+            </button>
+            <a href="/admin/posts/comments/{{ post.id }}"><button type="button" class="btn btn-warning ">
+            Back
+            </button>
+            </a>
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+{% endblock %}

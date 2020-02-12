@@ -70,6 +70,9 @@
                                             <span class="profile-username">{{ profile.username }}</span>
                                         </div>
                                         <div class="col-md-12">
+                                            <a href="/logout" class="d-xl-none d-block">
+                                                <span class="btn btn-dark">Logout</span>
+                                            </a>
                                             {% if profile.id is user.id %}
                                                 <a href="/profile/{{ user.id }}/edit">
                                                     <span class="btn btn-light"><i class="fa fa-user-cog"></i>&nbsp;&nbsp;Edit</span>

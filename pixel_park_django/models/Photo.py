@@ -3,7 +3,10 @@ import urllib
 
 from django.core.files import File
 from django.db import models
+from django.db.models.signals import post_delete
+
 from ..models.Post import Post
+from django.dispatch import receiver
 
 
 # Create your models here.
@@ -26,3 +29,8 @@ class Photo(models.Model):
                 File(open(result[0], 'rb'))
             )
             self.save()
+
+
+@receiver(post_delete, sender=Photo)
+def submission_delete(sender, instance, **kwargs):
+    instance.photo.delete(False)

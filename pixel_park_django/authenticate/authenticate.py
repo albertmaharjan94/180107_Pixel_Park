@@ -9,7 +9,12 @@ class Auth:
         def wrap(request):
             # try:
             if 'user' in request.session:
-                return function(request)
+                if len(User.objects.filter(id=request.session['user'])) != 0:
+                    return function(request)
+                else:
+                    request.session.flush()
+                    return redirect('/login')
+
             # except:
             else:
                 messages.error(request, 'Timed Out')

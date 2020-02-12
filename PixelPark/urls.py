@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from pixel_park_django.views import UserView, HomeView, PostView
+from pixel_park_django.views.Admin import DashView, A_UserView, A_PostView
 
 urlpatterns = [
     # path('test', UserView.index),
@@ -67,7 +68,34 @@ urlpatterns = [
     path('profile/<int:id>/edit', UserView.edit_user),
 
     path('profile/<int:id>/update', UserView.update_user),
+    path('post/delete/<int:id>', PostView.delete_post),
 
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
+    path('admin/', DashView.index),
 
+    path('admin/users', A_UserView.index),
+    path('admin/user/delete', A_UserView.delete),
+    path('admin/user/create', A_UserView.create),
+    path('admin/users', A_UserView.create),
+    path('admin/user/edit/<int:id>', A_UserView.edit),
+
+    path('admin/user/edit-password/<int:id>', A_UserView.edit_password),
+    path('admin/users/update/<int:id>', A_UserView.update),
+    path('admin/users/update-password/<int:id>', A_UserView.update_password),
+
+    path('admin/posts', A_PostView.index),
+    path('admin/post/delete', A_PostView.delete),
+    path('admin/post/edit/<int:id>', A_PostView.edit),
+    path('admin/post/update/<int:id>', A_PostView.update),
+    path('admin/post/create', A_PostView.create),
+    path('admin/post/store', A_PostView.store),
+
+    path('admin/posts/comment/delete', A_PostView.comment_delete),
+    path('admin/posts/comments/<int:id>', A_PostView.comment),
+
+    path('admin/post/edit-comment/<int:id>', A_PostView.comment_edit),
+    path('admin/post/comment/update/<int:id>',A_PostView.comment_update),
+    path('admin/post/comment/create/<int:id>',A_PostView.comment_create),
+
+    path('admin/post/comment/store/<int:id>', A_PostView.comment_store),
 ]

@@ -1,0 +1,38 @@
+{% extends "layouts/admin-layout.html" %}
+{% block users %}active{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+ <!-- Page Heading -->
+
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-2 text-gray-800">Users</h1>
+  </div>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Create a User</h6>
+    </div>
+    <div class="card-body">
+      <form action="/admin/users" method="post" enctype="multipart/form-data">
+      {%csrf_token %}
+        {{ form|crispy }}
+          <div class="form-group">
+              <label>Password</label><span class="asteriskField">*</span>
+              <input class="form-control" name="password" type="password">
+          </div>
+          <div class="form-group">
+              <input class="form-control" type="file" name="image">
+          </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary ">
+            Submit
+            </button>
+        </div>
+
+      </form>
+
+
+    </div>
+  </div>
+
+{% endblock %}
