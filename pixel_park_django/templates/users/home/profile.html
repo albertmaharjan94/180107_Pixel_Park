@@ -70,10 +70,10 @@
                                             <span class="profile-username">{{ profile.username }}</span>
                                         </div>
                                         <div class="col-md-12">
+                                            {% if profile.id is user.id %}
                                             <a href="/logout" class="d-xl-none d-block">
                                                 <span class="btn btn-dark">Logout</span>
                                             </a>
-                                            {% if profile.id is user.id %}
                                                 <a href="/profile/{{ user.id }}/edit">
                                                     <span class="btn btn-light"><i class="fa fa-user-cog"></i>&nbsp;&nbsp;Edit</span>
                                                 </a>
@@ -113,9 +113,11 @@
                                         <div class="col-md-12">
                                             <span class="profile-text">{{ profile.description }}</span>
                                         </div>
-<!--                                        <div class="col-md-12">-->
-<!--                                            <span class="profile-text"><a href="#">{{ user.social_link }}</a></span>-->
-<!--                                        </div>-->
+                                        {% if user.social_link %}
+                                        <div class="col-md-12">
+                                            <span class="profile-text"><a target="_blank" href="{{ user.social_link }}">{{ user.social_link }}</a></span>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

@@ -1,3 +1,4 @@
+{% load has_like %}
 <div class="row">
     <!-- image start -->
     <div class="col-lg-12 col-md-12 w-100 pb-4">
@@ -55,15 +56,30 @@
                         <span><a href="#">{{ post.user.name }}</a></span>
                     </div>
                 </div>
-                <div class="col-md-12 py-0 i-frame-format">
-                    <span class=""><a class="heart" href="#"><i class="far fa-heart"></i></a></span>
+<!--                <div class="col-md-12 py-0 i-frame-format">-->
+<!--                    <span class=""><a class="heart" href="#"><i class="far fa-heart"></i></a></span>-->
 
-                    <span class="ml-2"><a href="#" class="comment-icon" data-id='1'><i class="far fa-comment"></i></a></span>
-                </div>
+<!--                    <span class="ml-2"><a href="#" class="comment-icon" data-id='1'><i class="far fa-comment"></i></a></span>-->
+<!--                </div>-->
+                <div class="col-md-12 py-0 i-frame-format">
+
+							{% if post.like_set.all %}
+								{% if post|has_like:user.id %}
+									<span class=""><a class="heart" data-user="{{ user.id }}" data-post="{{ post.id }}" href="#"><i class="fa fa-heart heart-active"></i></a></span>
+								{% else %}
+									<span class=""><a class="heart" data-user="{{ user.id }}" data-post="{{ post.id }}" href="#"><i class="far fa-heart"></i></a></span>
+								{% endif %}
+							{% endif %}
+							{% if not post.like_set.all %}
+							<span class=""><a class="heart" data-user="{{ user.id }}" data-post="{{ post.id }}" href="#"><i class="far fa-heart"></i></a></span>
+							{% endif %}
+
+							<span class="ml-2"><a href="#" class="comment-icon" data-id='1'><i class="far fa-comment"></i></a></span>
+						</div>
                 <div class="col-md-12 py-0" >
                     <div class="img-post-likes">
-                        <p class="my-0">0 likes</p>
-                    </div>
+                            <p class="my-0 text text-secondary likes-text d-inline-block" data-id="{{ post.id }}"><span class="likes-{{ post.id }}">{{ post.like_set.all.count }}</span> likes</a></p>
+                        </div>
                     <div class="img-post-caption">
                         <a href="" class="d-inline">{{ post.user.name }}</a>
                         <p class="d-inline">{{ post.caption }}</p>
@@ -96,4 +112,3 @@
             <!-- end comments -->
         </div>
     </div>
-</div>

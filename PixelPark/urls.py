@@ -59,6 +59,7 @@ urlpatterns = [
 
     # get notification
     path('profile/get-notification', HomeView.get_notification),
+    path('notifications',HomeView.notification),
 
     # Post views
     path('upload', PostView.upload),

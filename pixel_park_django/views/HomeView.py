@@ -55,7 +55,7 @@ def index(request):
     try:
         post = Post.objects.filter(Q(user_id__in=follow) | Q(user_id=request.session['user'])).order_by(order)
         # return HttpResponse
-        if len(post)/ 2 <= next:
+        if len(post) / 2 <= next:
             is_last = True
         else:
             is_last = False
@@ -71,7 +71,7 @@ def index(request):
 
     return render(request, 'users/home/index.html',
                   {'user': user, 'posts': post, 'suggestions': suggestion, 'prev': prev, 'next': next,
-                   'is_last': is_last,'start':start})
+                   'is_last': is_last, 'start': start})
 
 
 @Auth.is_logged_in
@@ -187,10 +187,8 @@ def like_list(request, id):
     return JsonResponse({'html': html})
 
 
-# get notification ajax
-def get_notification(request):
-    user = User.objects.filter(id=request.session['user'])
-
+# notification function
+def userNotification(request, user):
     notificationList = list()
     for p in user.first().post_set.all():
         for l in p.like_set.all():
@@ -210,7 +208,47 @@ def get_notification(request):
             {'type': 'follow', 'user_id': f.follower.id, 'user_name': f.follower.username, 'image': f.follower.image,
              'date': f.date})
     sortedNotification = sorted(notificationList, key=lambda i: i['date'], reverse=True)
+    return sortedNotification
+    # html = render_to_string('users/home/render/notification.html',
+    #                         {'notifications': sortedNotification, 'user': user.first()})
+    # return JsonResponse({'html': html})
 
+
+# notification page
+def notification(request):
+    user = User.objects.filter(id=request.session['user'])
+
+    sortedNotification = userNotification(request, user)
+    # html = render_to_string('users/home/render/notification.html',
+    #                         {'notifications': sortedNotification, 'user': user.first()})
+    # return JsonResponse({'html': html})
+    return render(request, 'users/home/notifications.html', {'user': user.first(), 'notifications': sortedNotification})
+
+
+# get notification ajax
+def get_notification(request):
+    user = User.objects.filter(id=request.session['user'])
+
+    # notificationList = list()
+    # for p in user.first().post_set.all():
+    #     for l in p.like_set.all():
+    #         if l.user_id != request.session['user']:
+    #             notificationList.append(
+    #                 {'type': 'like', 'user_id': l.user.id, 'user_name': l.user.username, 'user_image': l.user.image,
+    #                  'post_id': p.id, 'post_image': p.photo_set.first().photo,
+    #                  'date': l.date})
+    #     for c in p.comment_set.all():
+    #         if c.user_id != request.session['user']:
+    #             notificationList.append(
+    #                 {'type': 'comment', 'user_id': c.user.id, 'user_name': c.user.username, 'user_image': c.user.image,
+    #                  'post_id': p.id, 'post_image': p.photo_set.first().photo,
+    #                  'date': c.date})
+    # for f in user.first().following.all():
+    #     notificationList.append(
+    #         {'type': 'follow', 'user_id': f.follower.id, 'user_name': f.follower.username, 'image': f.follower.image,
+    #          'date': f.date})
+    # sortedNotification = sorted(notificationList, key=lambda i: i['date'], reverse=True)
+    sortedNotification = userNotification(request, user)[0:4]
     html = render_to_string('users/home/render/notification.html',
                             {'notifications': sortedNotification, 'user': user.first()})
     return JsonResponse({'html': html})

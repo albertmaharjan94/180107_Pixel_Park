@@ -3,6 +3,7 @@
 <head>
 	<title>{% block title %}{% endblock %}</title>
     {% load static %}
+	<link rel="shortcut icon" href="{% static 'logo.png' %}" />
 	<!-- Bootstrap -->
 
 	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
@@ -172,12 +173,12 @@
 
 			<div class="px-5 w-auto row">
 				<div class="col-sm-4 px-0 ">
-					<a class="navbar-brand text-left"  href="/index">PixelPark</a>
+					<a class="navbar-brand text-left"  href="/index"><img class="icon-image-profile img-fluid" src="{% static 'logo2.png' %}" style="width:auto; height: 50px"> </a>
 				</div>
 
 				<!--search bar-->
-				<div class="col-sm-4 px-0 text-center dropdown" id="search-bar">
-					<form class="form-inline my-2 my-lg-0 px-3 h-20 ">
+				<div class="col-sm-4 px-0 text-center dropdown d-flex" id="search-bar">
+					<form class="form-inline my-2 my-lg-0 px-3 h-20 w-100">
 				      	<input class="form-control mr-sm-2 w-100 text-center rounded" id="nav-search" type="search" placeholder="Search" aria-label="Search">
 
 						<div id="nav-search-dropdown" class="dropdown-menu dropdown-search w-100 p-0">
@@ -186,9 +187,9 @@
 				      	<!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
 				    </form>
 				</div>
-				<div class="col-sm-4 px-0 text-right i-frame-format">
+				<div class="col-sm-4 px-0 text-right i-frame-format d-flex justify-content-end align-items-center ">
 
-					<span class="ml-3"><a href="#" id="nav-camera" class="px-10px icon-hover rounded"><i class="fas fa-camera-retro"></i></a></span>
+					<span class="ml-3"><a href="#" class="px-10px icon-hover rounded nav-camera"><i class="fas fa-camera-retro"></i></a></span>
 					<span class="ml-3"><a href="#" class="px-10px icon-hover rounded"><i class="far fa-compass"></i></a></span>
 
 					<!-- <a class="col nav-icon" href="#"><span><i class="fas fa-camera"></i></span></a> -->
@@ -252,26 +253,43 @@
 		<!-- mobile view nav -->
 		<nav class="small-nav navbar sticky-top navbar-light bg-light" style="border-bottom: 1px solid #e5e5e5">
 
+			<a href="/index">
+				<div class="row">
+						<div class="col-md-12 d-flex justify-content-center py-1">
+						<img src="{% static 'logo2.png' %}" style="height: 45px;">
+					</div>
+
+				</div>
+
+			</a>
 			<div class="w-auto row text-center i-frame-format">
 
-					<a class="col nav-icon" href="#"><span><i class="fas fa-home"></i></span></a>
+					<a class="col nav-icon" href="/index"><span><i class="fas fa-home"></i></span></a>
 
 					<a class="col nav-icon" href="#"><span><i class="fas fa-search"></i></span></a>
 
-					<a class="col nav-icon" href="#"><span><i class="fas fa-camera"></i></span></a>
+					<a class="col nav-icon nav-camera" href="#"><span><i class="fas fa-camera "></i></span></a>
 					<!-- <a class="col nav-icon" href="#"><span><i class="fas fa-plus"></i></span></a> -->
 
-					<a class="col nav-icon" href="#"><span><i class="fas fa-heart"></i></span></a>
-					<a class="col nav-icon" href="#"><span><i class="fas fa-user"></i></span></a>
+					<a class="col nav-icon" href="/notifications"><span><i class="fas fa-heart"></i></span></a>
+					<a class="col nav-icon" href="/profile/{{ user.id }}"><span><i class="fas fa-user"></i></span></a>
 
 			</div>
 
 		</nav>
 		<!-- mobile view nav end -->
 
-	  	<div class="row justify-content-center h-auto mx-2">
+	  	<div class="row justify-content-center h-auto mx-2 ">
             {% block content %}{% endblock %}
        	</div>
+	</div>
+		<footer class="">
+			<div class=" mx-0 fixed-bottom">
+				<div class="col-md-12 text-center p-2" style="background-color: #f8f9fa !important;box-shadow: 0 0 5px #c0c0c0;">
+					<span>Copyright &copy; <a target="_blank" href="https://github.com/albertmaharjan94">Albert Maharjan</a> {% now "Y" %} </span>
+				</div>
+			</div>
+		</footer>
 	</div>
 
 
@@ -339,7 +357,7 @@
 			})
 		});
 
-		$('#nav-camera').on('click',function(e){
+		$('.nav-camera').on('click',function(e){
 			$('.modal-media').modal('show');
 		});
 
@@ -670,8 +688,9 @@
                 type:'GET',
                 success:function(data){
                     console.log(data)
+
                     $('.modal-body-render').html(data.html)
-                    $('.modal-render .modal-title').html('Follower')
+                    $('.modal-render .modal-title').html('Likes')
                     $('.modal-render .modal-dialog').removeClass('modal-xl').addClass('modal-lg').addClass('h-50');
                     $('.modal-render .modal-content').addClass('overflow-auto').addClass('h-100')
                     $('.modal-render').modal('show');

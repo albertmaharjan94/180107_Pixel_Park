@@ -135,7 +135,7 @@
 			</div>
 		</div>
 
-		<div class="row w-100 foot-card">
+		<div class="row w-100 foot-card d-flex justify-content-center">
 			<a href="#" class="text-secondary">About Us</a>&nbsp;.&nbsp;<a href="#" class="text-secondary">Support</a>&nbsp;.&nbsp;<a href="#" class="text-secondary">Terms and Conditions</a>&nbsp;.&nbsp;<a href="#" class="text-secondary">Privacy Policy</a>
 		</div>
 	</div>
@@ -152,7 +152,7 @@
 					<!-- card post header -->
 					<div class="col-md-12 " style="height: 50px; border-bottom: 1px solid #e5e5e5; ">
 						<div class="row h-100">
-							<div class="col-md-6 align-items-center d-flex">
+							<div class="col-6 align-items-center d-flex">
 								<div class="rounded float-left icon-image">
 									<img src="/static/images/{{ i.user.image }}" class="rounded-circle icon-image">
 								</div>
@@ -160,7 +160,7 @@
 									<span><a href="/profile/{{ i.user.id }}">{{ i.user.name }}</a></span>
 								</div>
 							</div>
-							<div class="col-md-6 align-items-center d-flex justify-content-end	">
+							<div class="col-6 align-items-center d-flex justify-content-end	">
 								{% if i.user.id == user.id %}
 								<div>
 									<button data-id="{{ i.id }}" class="btn btn-danger btn-sm btn-post-delete"><i class="fas fa-trash"></i> Delete</button>
@@ -281,15 +281,15 @@
 			{% endfor %}
 			{% if posts  %}
 			<div class="col-md-12">
-				<div class="px-5 mx-5">
+				<div class="px-5 mx-5 page-parent">
 					<div class="row">
-					<div class="col-sm-6  px-0">
+					<div class="col-6 page-div  px-0">
 
-						<a  style="color:white" {% if prev > -1 and start != 0 %} href="/index?page={{ prev }}"  {% endif %}><button class="btn btn-primary btm-sm" {% if prev < 0 or start == 0 %} disabled  {% endif %}><i class="fas fa-chevron-left"></i> Back</button></a>
+						<a  {% if prev > -1 and start != 0 %} href="/index?page={{ prev }}"  {% endif %}><button class="btn btn-primary btm-sm btn-page" {% if prev < 0 or start == 0 %} disabled  {% endif %}><i class="fas fa-chevron-left"></i> Back</button></a>
 					</div>
 
-					<div class="col-sm-6 text-right px-0">
-						<a style="color:white"  {% if not is_last %} href="/index?page={{ next }}" {% endif %}><button class="btn btn-primary btm-sm" {% if is_last %} disabled  {% endif %}>Next <i class="fas fa-chevron-right"></i></button></a>
+					<div class="col-6 page-div text-right px-0">
+						<a  {% if not is_last %} href="/index?page={{ next }}" {% endif %}><button class="btn btn-primary btm-sm btn-page" {% if is_last %} disabled  {% endif %}>Next <i class="fas fa-chevron-right"></i></button></a>
 						</button>
 					</div>
 				</div>
@@ -302,7 +302,6 @@
 
 </div>
 
-</div>
 </div>
 	<script>
 		$(document).on('click','.btn-post-delete',function(e){

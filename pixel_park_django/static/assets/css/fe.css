@@ -95,7 +95,7 @@ body{
 .i-frame-format a{
   text-decoration: none;
   color:black;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   display: inline-block;
   padding-top: .3125rem;
   padding-bottom: .3125rem;
@@ -132,7 +132,7 @@ body{
     left: auto;
     position: fixed;
     z-index: 0;
-    top: 57px;
+    top: 83px;
     height: 400px !important;
 }
 
@@ -277,6 +277,10 @@ a:hover{
       height: 100px;
       width: 100px;
   }
+  .page-div{
+    width:100% !important;
+  }
+
 
 }
 
@@ -304,6 +308,10 @@ a:hover{
   .img-post,.profile-top{
     margin: auto 0 !important;
     /*height: 500px !important;*/
+  }
+    .page-parent{
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 @media screen and (max-width:991.5px){
@@ -353,4 +361,9 @@ a:hover{
 /* [3] Finally, transforming the image when container gets hovered */
 .image-post-profile-parent:hover img {
   transform: scale(1.2);
+}
+
+.btn-page{
+    color:white;
+    font-size: 0.9rem !important;
 }
