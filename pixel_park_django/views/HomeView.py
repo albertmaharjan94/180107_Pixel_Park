@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 import calendar
 import time
+from django.db.models import Count
 
 from ..authenticate.authenticate import Auth
 from django.template.loader import render_to_string
@@ -28,6 +29,7 @@ def search(request):
 
 
 @Auth.is_logged_in
+@Auth.is_user
 def index(request):
     # return HttpResponse(request.session['user'])
     try:
@@ -67,7 +69,7 @@ def index(request):
     # test
     # test end
     following_list = user.follower.all().values_list('following_id', flat=True)
-    suggestion = User.objects.exclude(Q(id__in=following_list) | Q(id=user.id))
+    suggestion = User.objects.exclude(Q(id__in=following_list) | Q(id=user.id) | Q(is_admin=1))[0:5]
 
     return render(request, 'users/home/index.html',
                   {'user': user, 'posts': post, 'suggestions': suggestion, 'prev': prev, 'next': next,
@@ -81,6 +83,7 @@ def logout(request):
 
 
 @Auth.is_logged_in
+@Auth.is_user
 def follow_profile(request):
     follow = Follow.objects.filter(Q(follower_id=request.session['user']) & Q(following_id=request.POST['profile_id']))
     try:
@@ -95,6 +98,7 @@ def follow_profile(request):
 
 
 @Auth.is_logged_in
+@Auth.is_user_id
 def unfollow_profile(request):
     follow = Follow.objects.filter(Q(follower_id=request.session['user']) & Q(following_id=request.POST['profile_id']))
     try:
@@ -109,6 +113,7 @@ def unfollow_profile(request):
 
 
 @Auth.is_logged_in_id
+@Auth.is_user_id
 def profile(request, id):
     try:
         profile = User.objects.get(id=id)
@@ -127,6 +132,7 @@ def profile(request, id):
 
 
 @Auth.is_logged_in_id
+@Auth.is_user_id
 def profile_photo(request, id):
     try:
         user = User.objects.get(id=request.session['user'])
@@ -215,6 +221,8 @@ def userNotification(request, user):
 
 
 # notification page
+@Auth.is_logged_in
+@Auth.is_user
 def notification(request):
     user = User.objects.filter(id=request.session['user'])
 
@@ -225,29 +233,19 @@ def notification(request):
     return render(request, 'users/home/notifications.html', {'user': user.first(), 'notifications': sortedNotification})
 
 
+# discover page
+@Auth.is_logged_in
+@Auth.is_user
+def discover(request):
+    user = User.objects.filter(id=request.session['user'])
+    p = Post.objects.annotate(post__likes=Count('like')).order_by('post__likes')
+    return render(request, 'users/home/discover.html', {'post': p,'user':user.first()})
+
+
 # get notification ajax
 def get_notification(request):
     user = User.objects.filter(id=request.session['user'])
 
-    # notificationList = list()
-    # for p in user.first().post_set.all():
-    #     for l in p.like_set.all():
-    #         if l.user_id != request.session['user']:
-    #             notificationList.append(
-    #                 {'type': 'like', 'user_id': l.user.id, 'user_name': l.user.username, 'user_image': l.user.image,
-    #                  'post_id': p.id, 'post_image': p.photo_set.first().photo,
-    #                  'date': l.date})
-    #     for c in p.comment_set.all():
-    #         if c.user_id != request.session['user']:
-    #             notificationList.append(
-    #                 {'type': 'comment', 'user_id': c.user.id, 'user_name': c.user.username, 'user_image': c.user.image,
-    #                  'post_id': p.id, 'post_image': p.photo_set.first().photo,
-    #                  'date': c.date})
-    # for f in user.first().following.all():
-    #     notificationList.append(
-    #         {'type': 'follow', 'user_id': f.follower.id, 'user_name': f.follower.username, 'image': f.follower.image,
-    #          'date': f.date})
-    # sortedNotification = sorted(notificationList, key=lambda i: i['date'], reverse=True)
     sortedNotification = userNotification(request, user)[0:4]
     html = render_to_string('users/home/render/notification.html',
                             {'notifications': sortedNotification, 'user': user.first()})
@@ -255,6 +253,7 @@ def get_notification(request):
 
 
 @Auth.is_logged_in_id
+@Auth.is_user_id
 def profile_image_update(request, id):
     if id != request.session['user']:
         request.session.flush()

@@ -78,7 +78,10 @@ def logged(request):
         return redirect('/login')
     else:
         request.session['user'] = user.id
-        return redirect('/index')
+        if user.is_admin==0:
+            return redirect('/index')
+        else:
+            return redirect('/admin')
 
 
 @Auth.is_logged_in_id

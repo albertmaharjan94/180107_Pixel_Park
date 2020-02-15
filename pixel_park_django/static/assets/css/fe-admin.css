@@ -10991,7 +10991,7 @@ form.user .btn-user {
 }
 
 footer.sticky-footer {
-  padding: 2rem 0;
+  padding: 1rem 0;
   flex-shrink: 0;
 }
 
@@ -11002,4 +11002,10 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+a:hover{
+    text-decoration:none;
+}
+.card-dash:hover{
+background-color:#f8f8f8 ;
 }

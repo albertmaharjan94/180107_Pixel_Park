@@ -177,11 +177,11 @@
 				</div>
 
 				<!--search bar-->
-				<div class="col-sm-4 px-0 text-center dropdown d-flex" id="search-bar">
+				<div class="col-sm-4 px-0 text-center dropdown d-flex search-bar">
 					<form class="form-inline my-2 my-lg-0 px-3 h-20 w-100">
-				      	<input class="form-control mr-sm-2 w-100 text-center rounded" id="nav-search" type="search" placeholder="Search" aria-label="Search">
+				      	<input class="form-control mr-sm-2 w-100 text-center rounded nav-search"  type="search" placeholder="Search" aria-label="Search">
 
-						<div id="nav-search-dropdown" class="dropdown-menu dropdown-search w-100 p-0">
+						<div id="" class="dropdown-menu dropdown-search w-100 p-0 nav-search-dropdown">
 
 						</div>
 				      	<!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
@@ -190,7 +190,7 @@
 				<div class="col-sm-4 px-0 text-right i-frame-format d-flex justify-content-end align-items-center ">
 
 					<span class="ml-3"><a href="#" class="px-10px icon-hover rounded nav-camera"><i class="fas fa-camera-retro"></i></a></span>
-					<span class="ml-3"><a href="#" class="px-10px icon-hover rounded"><i class="far fa-compass"></i></a></span>
+					<span class="ml-3"><a href="/discover" class="px-10px icon-hover rounded"><i class="far fa-compass"></i></a></span>
 
 					<!-- <a class="col nav-icon" href="#"><span><i class="fas fa-camera"></i></span></a> -->
 
@@ -266,7 +266,7 @@
 
 					<a class="col nav-icon" href="/index"><span><i class="fas fa-home"></i></span></a>
 
-					<a class="col nav-icon" href="#"><span><i class="fas fa-search"></i></span></a>
+					<a class="col nav-icon" href="/discover"><span><i class="fas fa-search"></i></span></a>
 
 					<a class="col nav-icon nav-camera" href="#"><span><i class="fas fa-camera "></i></span></a>
 					<!-- <a class="col nav-icon" href="#"><span><i class="fas fa-plus"></i></span></a> -->
@@ -279,14 +279,14 @@
 		</nav>
 		<!-- mobile view nav end -->
 
-	  	<div class="row justify-content-center h-auto mx-2 ">
+	  	<div class="row justify-content-center h-auto mx-2 " style="margin-bottom:40px;">
             {% block content %}{% endblock %}
        	</div>
 	</div>
 		<footer class="">
 			<div class=" mx-0 fixed-bottom">
 				<div class="col-md-12 text-center p-2" style="background-color: #f8f9fa !important;box-shadow: 0 0 5px #c0c0c0;">
-					<span>Copyright &copy; <a target="_blank" href="https://github.com/albertmaharjan94">Albert Maharjan</a> {% now "Y" %} </span>
+					<span>Pixel Park {% now (Y) %} | by <a target="_blank" href="https://github.com/albertmaharjan94">Albert Maharjan</a></span>
 				</div>
 			</div>
 		</footer>
@@ -309,12 +309,12 @@
 	<script type="text/javascript">
 		//  search
 
-		$('#nav-search').on('focus',function(e){
+		$('.nav-search').on('focus',function(e){
 			console.log('hi')
 <!--			$('#nav-search-dropdown').show();-->
 <!--			search($(this).val())-->
 		})
-		$('#nav-search').on('change keyup paste click',function(e){
+		$('.nav-search').on('change keyup paste click',function(e){
 
 			var search=$(this).val()
 			$.ajax({
@@ -324,8 +324,8 @@
 				method:'GET',
 				success:function(data){
 					console.log(data.data)
-					$('#nav-search-dropdown').html(data.data);
-					$('#nav-search-dropdown').show();
+					$('.nav-search-dropdown').html(data.data);
+					$('.nav-search-dropdown').show();
 				}
 
 			})
@@ -373,9 +373,9 @@
 			$('#nav-profile-menu').toggle()
 		});
 		$('html').on('click',function(e) {
-			if( !$(e.target).closest("#search-bar").length > 0 )
+			if( !$(e.target).closest(".search-bar").length > 0 )
 			{
-				$('#search-bar #nav-search-dropdown').hide();
+				$('.search-bar .nav-search-dropdown').hide();
 			}
 		   	if( !$(e.target).closest("#notification-head").length > 0 ) {
 		    	$('#notification-head #nav-notification-menu').hide();
@@ -697,6 +697,77 @@
 
                 }
             })
+        })
+	</script>
+
+<!--profile-->
+<script type="text/javascript">
+		$('.comment-icon').on('click',function (e){
+			e.preventDefault();
+			var id=$(this).attr('data-id');
+			$('.post-1'+id).focus();
+		});
+
+
+
+		$('.image-post-profile').on('click',function(){
+		    var id=$(this).attr('data-id')
+		    $.ajax({
+		        url: '/profile/post/'+id,
+		        dataType: 'JSON',
+		        type: 'GET',
+		        success:function(data){
+                    $('.modal-body-render').html(data.html)
+
+                    $('.modal-render .modal-title').html('')
+                    $('.modal-render .modal-dialog').removeClass('modal-lg').addClass('modal-xl').removeClass('h-50');
+                    $('.modal-render .modal-content').removeClass('overflow-auto').removeClass('h-100')
+                    $('.modal-render').modal('show');
+                }
+		    });
+		});
+        $('#follower-link').on('click',function(e){
+            e.preventDefault();
+            var id=$(this).data('id');
+            $.ajax({
+                url:'/profile/follower/'+id,
+                dataType:'JSON',
+                type:'GET',
+                success:function(data){
+                    console.log(data)
+                    $('.modal-body-render').html(data.html)
+                    $('.modal-render .modal-title').html('Follower')
+                    $('.modal-render .modal-dialog').removeClass('modal-xl').addClass('modal-lg').addClass('h-50');
+                    $('.modal-render .modal-content').addClass('overflow-auto').addClass('h-100')
+                    $('.modal-render').modal('show');
+
+                }
+            })
+        })
+
+        $('#following-link').on('click',function(e){
+            e.preventDefault();
+            var id=$(this).data('id');
+            $.ajax({
+                url:'/profile/following/'+id,
+                dataType:'JSON',
+                type:'GET',
+                success:function(data){
+                    console.log(data)
+                    $('.modal-body-render').html(data.html)
+                    $('.modal-render .modal-title').html('Following')
+                    $('.modal-render .modal-dialog').removeClass('modal-xl').addClass('modal-lg').addClass('h-50');
+                    $('.modal-render .modal-content').addClass('overflow-auto').addClass('h-100')
+                    $('.modal-render').modal('show');
+
+                }
+            })
+        })
+        $('#profile-post-image').on('click',function(e){
+            $('#profile-image-input').click();
+        })
+        $('#profile-image-input').on('change',function(e){
+            $('#profile-image-form').submit();
         })
 	</script>
 {% block scripts %}{% endblock %}

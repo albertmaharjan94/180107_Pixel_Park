@@ -5,30 +5,36 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from ...models.User import User
 from ...templates.forms import admin_user
-
+from ...authenticate.authenticate import Auth
 import calendar
 import time
 
 
+@Auth.is_logged_in
+@Auth.is_admin
 def index(request):
     if request.method == "GET":
-        users = User.objects.all()
+        users = User.objects.filter(is_admin=0)
 
-        return render(request, 'admin/users/index.html', {'users': users})
+        user = User.objects.get(id=request.session['user'])
+        return render(request, 'admin/users/index.html', {'user':user,'users': users})
     else:
         user = User(
             email=request.POST['email'],
             username=request.POST['username'],
             name=request.POST['name'],
             password=make_password(request.POST['password']),
-            image=request.FILES['image'],
+            image= request.FILES['image'] if request.FILES else 'user.png',
         )
         user.save()
         messages.success(request, 'User successfully registered')
         return redirect('/admin/users')
 
 
+@Auth.is_logged_in
+@Auth.is_admin
 def delete(request):
+
     users = User.objects.get(id=request.POST['id'])
     if users.image != 'user.png':
         users.image.delete(False)
@@ -41,26 +47,39 @@ def delete(request):
     return redirect('/admin/users')
 
 
+@Auth.is_logged_in_id
+@Auth.is_admin_id
 def edit(request, id):
-    user = User.objects.get(id=id)
 
-    return render(request, 'admin/users/edit.html', {'user': user})
+    user=User.objects.get(id=request.session['user'])
+    users = User.objects.get(id=id)
+
+    return render(request, 'admin/users/edit.html', {'user':user,'users': users})
 
 
+@Auth.is_logged_in_id
+@Auth.is_admin_id
 def edit_password(request, id):
-    user = User.objects.get(id=id)
+    users = User.objects.get(id=id)
 
-    return render(request, 'admin/users/edit-password.html', {'user': user})
+    user=User.objects.get(id=request.session['user'])
+    return render(request, 'admin/users/edit-password.html', {'user': user,'users':users})
 
 
+@Auth.is_logged_in
+@Auth.is_admin
 def create(request):
+
+    user=User.objects.get(id=request.session['user'])
     u = admin_user.UserForm(None)
-    return render(request, 'admin/users/create.html', {'form': u})
+    return render(request, 'admin/users/create.html', {'user':user,'form': u})
 
 
+@Auth.is_logged_in_id
+@Auth.is_admin_id
 def update(request, id):
     user = User.objects.get(id=id)
-    if request.FILES['image']:
+    if request.FILES:
         if user.image != 'user.png':
             user.image.delete(False)
 
@@ -76,6 +95,8 @@ def update(request, id):
     return redirect('/admin/users')
 
 
+@Auth.is_logged_in_id
+@Auth.is_admin_id
 def update_password(request, id):
     user = User.objects.get(id=id)
 

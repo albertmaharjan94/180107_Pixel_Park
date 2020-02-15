@@ -53,7 +53,7 @@
                         <img src="/static/images/{{ post.user.image }}" class="rounded-circle icon-image">
                     </div>
                     <div class="pl-2 h-100 float-left d-flex align-items-center">
-                        <span><a href="#">{{ post.user.name }}</a></span>
+                        <span><a href="/profile/{{ post.user.id }}">{{ post.user.name }}</a></span>
                     </div>
                 </div>
 <!--                <div class="col-md-12 py-0 i-frame-format">-->
@@ -81,7 +81,7 @@
                             <p class="my-0 text text-secondary likes-text d-inline-block" data-id="{{ post.id }}"><span class="likes-{{ post.id }}">{{ post.like_set.all.count }}</span> likes</a></p>
                         </div>
                     <div class="img-post-caption">
-                        <a href="" class="d-inline">{{ post.user.name }}</a>
+                        <a href="/profile/{{ post.user.id }}" class="d-inline">{{ post.user.name }}</a>
                         <p class="d-inline">{{ post.caption }}</p>
                     </div>
                     <div class="img-post-comment">
