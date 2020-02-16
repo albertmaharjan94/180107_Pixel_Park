@@ -1,29 +1,43 @@
-import os
 from calendar import calendar
-
-from django.contrib.messages.storage import session
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse,HttpResponseRedirect
 from django.shortcuts import render, redirect
 import calendar
 import time
 from django.db.models import Count
-
 from ..authenticate.authenticate import Auth
 from django.template.loader import render_to_string
-from django.core import serializers
 from django.db.models import Q
 from ..models.User import User
 from ..models.Post import Post
 from ..models.Like import Like
 from ..models.Comment import Comment
 from ..models.Follow import Follow
-from django.http import HttpResponseRedirect
+
+
+@Auth.is_logged_in_id
+@Auth.is_user_id
+def profile(request, id):
+    try:
+        profile = User.objects.get(id=id)
+        user = User.objects.get(id=request.session['user'])
+
+    except:
+        request.session.flush()
+        return redirect('/login')
+    follow_count = Follow.objects.filter(follower_id=profile.id).count()
+    follower_count = Follow.objects.filter(following_id=profile.id).count()
+
+    follower_list = user.follower.filter(follower_id=user.id).values_list('following_id', flat=True)
+    return render(request, 'users/home/profile.html',
+                  {'user': user, 'profile': profile, 'following_count': follow_count, 'follower_count': follower_count,
+                   'follower_list': follower_list})
 
 
 def search(request):
     search = request.GET['search']
 
-    user = User.objects.filter(Q(name__icontains=search) | Q(username__icontains=search) | Q(email__icontains=search))
+    user = User.objects.filter(
+        Q(name__icontains=search) | Q(username__icontains=search) | Q(email__icontains=search)).exclude(is_admin=1)
     html = render_to_string('users/home/render/search.html', {'users': user, 'search': search})
     return JsonResponse({'data': html})
 
@@ -98,7 +112,7 @@ def follow_profile(request):
 
 
 @Auth.is_logged_in
-@Auth.is_user_id
+@Auth.is_user
 def unfollow_profile(request):
     follow = Follow.objects.filter(Q(follower_id=request.session['user']) & Q(following_id=request.POST['profile_id']))
     try:
@@ -110,25 +124,6 @@ def unfollow_profile(request):
         follow.delete()
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
-
-@Auth.is_logged_in_id
-@Auth.is_user_id
-def profile(request, id):
-    try:
-        profile = User.objects.get(id=id)
-        user = User.objects.get(id=request.session['user'])
-
-    except:
-        request.session.flush()
-        return redirect('/login')
-    follow_count = Follow.objects.filter(follower_id=profile.id).count()
-    follower_count = Follow.objects.filter(following_id=profile.id).count()
-
-    follower_list = user.follower.filter(follower_id=user.id).values_list('following_id', flat=True)
-    return render(request, 'users/home/profile.html',
-                  {'user': user, 'profile': profile, 'following_count': follow_count, 'follower_count': follower_count,
-                   'follower_list': follower_list})
 
 
 @Auth.is_logged_in_id
@@ -239,7 +234,7 @@ def notification(request):
 def discover(request):
     user = User.objects.filter(id=request.session['user'])
     p = Post.objects.annotate(post__likes=Count('like')).order_by('post__likes')
-    return render(request, 'users/home/discover.html', {'post': p,'user':user.first()})
+    return render(request, 'users/home/discover.html', {'post': p, 'user': user.first()})
 
 
 # get notification ajax

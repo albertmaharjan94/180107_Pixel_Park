@@ -20,7 +20,7 @@ from pixel_park_django.views import UserView, HomeView, PostView
 from pixel_park_django.views.Admin import DashView, A_UserView, A_PostView
 
 urlpatterns = [
-    # path('test', UserView.index),
+    path('', UserView.home),
 
     # Landing Views
     path('login', UserView.login),
@@ -71,7 +71,12 @@ urlpatterns = [
 
     path('profile/<int:id>/edit', UserView.edit_user),
 
+    path('profile/<int:id>/edit/password', UserView.edit_password),
+
     path('profile/<int:id>/update', UserView.update_user),
+
+    path('profile/<int:id>/update/password', UserView.update_password),
+
     path('post/delete/<int:id>', PostView.delete_post),
 
     # path('admin/', admin.site.urls),

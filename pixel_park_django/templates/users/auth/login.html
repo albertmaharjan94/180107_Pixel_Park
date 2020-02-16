@@ -6,14 +6,16 @@ Login | Pixel Park
 
 {% block content %}
 <div class="title">
-	<h3 class="py-2">Login Page</h3>
+	{% load static %}
+	<img class="icon-image-profile img-fluid" src="{% static 'logo2.png' %}" style="width:auto; height: 50px"> </a>
+	<h3 class="py-2">Login</h3>
 </div>
 {% if messages %}
 
 <div class="alert px-0 py-0" role="alert">
 	<ul class="messages list-group">
 	    {% for message in messages %}
-	    	<li{% if message.tags %} class="list-group-item list-group-item-danger {{ message.tags }}"{% endif %}>{{ message }}</li>
+	    	<li{% if message.tags %} class="list-group-item list-group-item-info  {{ message.tags }}"{% endif %}>{{ message }}</li>
 	    {% endfor %}
 	</ul>
 </div>
@@ -29,9 +31,9 @@ Login | Pixel Park
 	<div class="form-group mt-1">
 		<button class="btn btn-block btn-primary">Login</button>
 	</div>
-	<div class="mt-1 text-center mb-3">
-		<a href="/forget">Forgot your password?</a>
-	</div>
+<!--	<div class="mt-1 text-center mb-3">-->
+<!--		<a href="/forget">Forgot your password?</a>-->
+<!--	</div>-->
 </form>
 <div>
 	<div class="mt-0">

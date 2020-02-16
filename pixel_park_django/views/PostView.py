@@ -8,11 +8,10 @@ from django.core.files.base import ContentFile
 import datetime
 import calendar
 import time
-import urllib
 
 
-# ts =
-
+@Auth.is_logged_in
+@Auth.is_user
 def upload(request):
     image_data = request.POST['photo']
     format, imgstr = image_data.split(';base64,')
@@ -27,9 +26,11 @@ def upload(request):
     photo.photo.save(file_name, data, save=True)
     return redirect('/index')
 
-def delete_post(request,id):
+
+@Auth.is_logged_in_id
+def delete_post(request, id):
     try:
-        p=Post.Post.objects.get(id=id)
+        p = Post.Post.objects.get(id=id)
         p.delete()
     except:
         pass

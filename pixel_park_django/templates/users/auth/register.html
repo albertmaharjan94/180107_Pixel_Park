@@ -6,7 +6,9 @@ Register | Pixel Park
 
 {% block content %}
 <div class="title">
-	<h3 class="py-2">Signup Page</h3>
+	{% load static %}
+	<img class="icon-image-profile img-fluid" src="{% static 'logo2.png' %}" style="width:auto; height: 50px"> </a>
+	<h3 class="py-2">Signup</h3>
 </div>
 {% if messages %}
 
@@ -22,9 +24,15 @@ Register | Pixel Park
 	{% csrf_token %}
 	<div class="form-group mt-1">
 		<input class="form-control" type="email" name="email" placeholder="Email" required="">
+		<div class="invalid-feedback feedback">
+
+    	</div>
 	</div>
 	<div class="form-group mt-1">
 		<input class="form-control" type="text" name="username" placeholder="Username" required="">
+		<div class="invalid-feedback feedback">
+
+    	</div>
 	</div>
 	<div class="form-group mt-1">
 		<input class="form-control" type="text" name="name" placeholder="Full Name" required="">
@@ -45,7 +53,7 @@ Register | Pixel Park
 		<a href="/login">Already have an account?</a>
 	</div>
 	<div class="mt-1 text-center mb-3">
-		<p>By signing up, you agree to our <a href="">Terms and Policy</a>.</p>
+		<p>By signing up, you agree to our <strong>Terms and Policy</strong>.</p>
 	</div>
 
 </form>
@@ -56,7 +64,6 @@ Register | Pixel Park
 {% block scripts %}
 <script type="text/javascript">
 	$('input[name="confirm-password"]').on('focus',function(e){
-		console.log('focu')
 		removeFeedback($(this))
 	});
 	$('input[name="confirm-password"]').on('focusout',function(e){
@@ -66,6 +73,7 @@ Register | Pixel Park
 		if(password.val() != cpassword.val()){
 			cpassword.addClass('is-invalid')
 			cpassword.parent().find('.feedback').html('Password didnot match')
+			cpassword.val("")
 			return false
 		}
 		return true
@@ -92,7 +100,7 @@ Register | Pixel Park
 
 					email.val("")
 					email.addClass('is-invalid')
-					email.parent().append(invalidFeedback('Email is already taken'))
+					email.parent().find('.feedback').html('Email is already taken')
 				}
 			}
 		})
@@ -115,10 +123,10 @@ Register | Pixel Park
 			success:function(data){
 
 				if(data.data.status){
-
 					username.val("")
 					username.addClass('is-invalid')
-					username.parent().append(invalidFeedback('Username already taken'))
+
+					username.parent().find('.feedback').html('Username is already taken')
 				}
 			}
 		})

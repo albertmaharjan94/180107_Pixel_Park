@@ -1,4 +1,30 @@
 {% load has_like %}
+<!-- Modal for delete -->
+<div class="modal" id="del-post-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content h-100">
+      <div class="modal-header">
+        <h5 class=" modal-title">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+			<h6>Are you sure you want to delete this post?</h6>
+
+      </div>
+
+	  <div class="modal-footer">
+		  <form id="del-post-form" action="" method="get">
+			<button class="btn btn-danger">Delete</button>
+			</form>
+
+	  </div>
+    </div>
+  </div>
+</div>
+
+<!-- end modal -->
 <div class="row">
     <!-- image start -->
     <div class="col-lg-12 col-md-12 w-100 pb-4">
@@ -49,12 +75,29 @@
             <div class="col-md-4 p-0 ">
 
                 <div class="col-md-12 align-items-center d-flex" style="height: 50px; ">
-                    <div class="rounded float-left icon-image">
-                        <img src="/static/images/{{ post.user.image }}" class="rounded-circle icon-image">
-                    </div>
-                    <div class="pl-2 h-100 float-left d-flex align-items-center">
-                        <span><a href="/profile/{{ post.user.id }}">{{ post.user.name }}</a></span>
-                    </div>
+<!--                    <div class="rounded float-left icon-image">-->
+<!--                        <img src="/static/images/{{ post.user.image }}" class="rounded-circle icon-image">-->
+<!--                    </div>-->
+<!--                    <div class="pl-2 h-100 float-left d-flex align-items-center">-->
+<!--                        <span><a href="/profile/{{ post.user.id }}">{{ post.user.name }}</a></span>-->
+<!--                    </div>-->
+                    <div class="row w-100">
+							<div class="col-6 align-items-center d-flex">
+								<div class="rounded float-left icon-image">
+									<img src="/static/images/{{ post.user.image }}" class="rounded-circle icon-image">
+								</div>
+								<div class="pl-2 h-100 float-left d-flex align-items-center">
+									<span><a href="/profile/{{ profile.user.id }}">{{ post.user.name }}</a></span>
+								</div>
+							</div>
+							<div class="col-6 align-items-center d-flex justify-content-end	">
+								{% if post.user.id == user.id %}
+								<div>
+									<button data-id="{{ post.id }}" class="btn btn-danger btn-sm btn-post-delete"><i class="fas fa-trash"></i> Delete</button>
+								</div>
+								{% endif %}
+							</div>
+						</div>
                 </div>
 <!--                <div class="col-md-12 py-0 i-frame-format">-->
 <!--                    <span class=""><a class="heart" href="#"><i class="far fa-heart"></i></a></span>-->

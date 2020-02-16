@@ -769,6 +769,13 @@
         $('#profile-image-input').on('change',function(e){
             $('#profile-image-form').submit();
         })
+
+        $(document).on('click','.btn-post-delete',function(e){
+			e.preventDefault();
+			var id=$(this).data('id')
+			$("#del-post-modal").modal('show')
+			$("#del-post-form").attr('action','/post/delete/'+id)
+		})
 	</script>
 {% block scripts %}{% endblock %}
 

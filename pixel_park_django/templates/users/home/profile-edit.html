@@ -33,11 +33,11 @@
                         <button type="submit" class="btn btn-block btn-primary">Update</button>
                     </div>
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-block btn-warning">Cancel</button>
+                        <a href="/profile/{{ user.id }}"><button type="button" class="btn btn-block btn-warning">Cancel</button></a>
                     </div>
                 </div>
                 <div class="mt-1 text-left">
-                    <a href="/login"><h5 class="text text-info">Click here to <strong>Change Password</strong></h5></a>
+                    <a href="/profile/{{ user.id }}/edit/password"><h5 class="text text-info">Click here to <strong>Change Password</strong></h5></a>
                 </div>
 
 

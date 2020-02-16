@@ -6,7 +6,6 @@ from ...models import User
 
 class UserForm(ModelForm):
     class Meta:
-        # write the name of models for which the form is made
         model = User.User
         password = forms.CharField(
             label=False,
@@ -16,7 +15,6 @@ class UserForm(ModelForm):
         # Custom fields
         fields = ["name", "username", "email"]
 
-        # this function will be used for the validation
 
     def clean(self):
 

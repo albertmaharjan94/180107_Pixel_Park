@@ -28,31 +28,8 @@
 	      		<div class="col col-sm-8 col-md-8 col-xs-12 bg-white py-5 my-5 rounded card">
 
 	      			<!-- content -->
-
 	      			{% block content %}{% endblock %}
-	      			<!-- <div class="title">
-		      			<h3 class="py-2">Login Page</h3>
-		      		</div>
-			      	<form action="index.html">
-			      		<div class="form-group mt-1">
-			      			<input class="form-control" type="text" name="email" placeholder="Username or Email">
-			      		</div>
-			      		<div class="form-group mt-1">
-			      			<input class="form-control" type="password" name="email" placeholder="Password">
-			      		</div>
-			      		<div class="form-group mt-1">
-			      			<button class="btn btn-block btn-primary">Login</button>
-			      		</div>
-			      		<div class="mt-1 text-center mb-3">
-			      			<a href="forget.html">Forgot your password?</a>
-			      		</div>
-			      	</form>
-			      	<div>
-			      		<div class="mt-0">
 
-			      			<p class="mb-0">Don't have an account?</p><a class="link mt-0" href="signup.html">Sign Up</a>
-			      		</div>
-			      	</div> -->
 		      	</div>
 	      	</div>
 	      </div>
@@ -61,10 +38,7 @@
 	      <!-- Images -->
 
 	      	<video class="video-slide h-100 d-block" autoplay="autoplay" muted="" id="fullscreen-video" loop="loop">
-          	<!-- <source src="https://res.cloudinary.com/dexzikebv/video/upload/v1568685946/Alpas/Computer_Keyboard_-_3188.mp4"
-            type="video/mp4"> -->
 	            <source src="{% static 'assets/video/video1.mp4' %}" type="video/mp4">
-
 	        </video>
 	        <div class="carousel-caption">
 			    <h2>Create. Share. Post</h2>
@@ -73,8 +47,6 @@
 
 	  </div>
 	</div>
-
-
 	<!-- Scripts -->
 	<!-- Bootstrap js -->
 	<script type="text/javascript" src="{% static 'assets/js/bootstrap.min.js' %}" ></script>
@@ -85,7 +57,6 @@
 	<script type="text/javascript">
 		$('.carousel').carousel()
 	</script>
-
 	{% block scripts %}{% endblock %}
 	</div>
 </body>
