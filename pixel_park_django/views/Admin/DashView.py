@@ -9,7 +9,7 @@ from ...authenticate.authenticate import Auth
 @Auth.is_admin
 def index(request):
     user = User.objects.get(id=request.session['user'])
-    userCount = len(User.objects.all())
+    userCount = len(User.objects.all().exclude(is_admin=1))
 
     postCount = len(Post.objects.all())
     return render(request, 'admin/dashboard.html', {'user': user, 'uc': userCount, 'pc': postCount})

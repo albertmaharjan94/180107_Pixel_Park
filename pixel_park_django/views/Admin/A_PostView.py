@@ -19,25 +19,24 @@ def index(request):
     if request.method == "GET":
         user = User.objects.get(id=request.session['user'])
         posts = Post.objects.all()
-        return render(request, 'admin/post/index.html', {'user':user,'posts': posts})
+        return render(request, 'admin/post/index.html', {'user': user, 'posts': posts})
 
 
 @Auth.is_logged_in_id
 @Auth.is_admin_id
 def edit(request, id):
-
-    user=User.objects.get(id=request.session['user'])
+    user = User.objects.get(id=request.session['user']).exclude(is_admin=1)
     p = Post.objects.get(id=id)
-    return render(request, 'admin/post/edit.html', {'user':user,'p': p})
+    return render(request, 'admin/post/edit.html', {'user': user, 'p': p})
 
 
 @Auth.is_logged_in
 @Auth.is_admin
 def create(request):
-    u = User.objects.all()
+    u = User.objects.all().exclude(is_admin=1)
 
-    user=User.objects.get(id=request.session['user'])
-    return render(request, 'admin/post/create.html', {'user':user,'u': u})
+    user = User.objects.get(id=request.session['user'])
+    return render(request, 'admin/post/create.html', {'user': user, 'u': u})
 
 
 @Auth.is_logged_in
@@ -82,7 +81,7 @@ def comment(request, id):
     if request.method == "GET":
         user = User.objects.get(id=request.session['user'])
         post = Post.objects.get(id=id)
-        return render(request, 'admin/post/comment.html', {'user':user,'post': post})
+        return render(request, 'admin/post/comment.html', {'user': user, 'post': post})
 
 
 @Auth.is_logged_in
@@ -98,17 +97,15 @@ def comment_delete(request):
 @Auth.is_logged_in_id
 @Auth.is_admin_id
 def comment_create(request, id):
-
-    user=User.objects.get(id=request.session['user'])
-    u = User.objects.all()
+    user = User.objects.get(id=request.session['user'])
+    u = User.objects.all().exclude(is_admin=1)
     p = Post.objects.get(id=id)
-    return render(request, 'admin/post/comment-add.html/', {'user':user,'users': u, 'post': p})
+    return render(request, 'admin/post/comment-add.html/', {'user': user, 'users': u, 'post': p})
 
 
 @Auth.is_logged_in_id
 @Auth.is_admin_id
 def comment_store(request, id):
-
     u = User.objects.get(id=request.POST['user_id'])
 
     p = Post.objects.get(id=id)
@@ -120,10 +117,10 @@ def comment_store(request, id):
 @Auth.is_logged_in_id
 @Auth.is_admin_id
 def comment_edit(request, id):
-
-    user=User.objects.get(id=request.session['user'])
+    user = User.objects.get(id=request.session['user'])
+    u = User.objects.all().exclude(is_admin=1)
     c = Comment.objects.get(id=id)
-    return render(request, 'admin/post/comment-edit.html', {'user':user,'c': c})
+    return render(request, 'admin/post/comment-edit.html', {'user': user, 'u': u, 'c': c})
 
 
 @Auth.is_logged_in_id
