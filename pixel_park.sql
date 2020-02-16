@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2020 at 03:26 PM
+-- Generation Time: Feb 16, 2020 at 04:23 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.4.1
 
@@ -179,7 +179,9 @@ INSERT INTO `comments` (`id`, `title`, `status`, `date`, `post_id`, `user_id`) V
 (1, 'You look cute, You inspire me.', 0, '2020-02-15 14:48:38.478857', 2, 5),
 (2, 'Idols', 0, '2020-02-15 14:54:17.609452', 4, 6),
 (5, 'you\'re my idol <3', 0, '2020-02-15 15:09:06.842296', 12, 2),
-(7, 'nice hair billie', 0, '2020-02-15 23:57:20.092416', 20, 5);
+(7, 'nice hair billie', 0, '2020-02-15 23:57:20.092416', 20, 5),
+(14, 'nice one', 0, '2020-02-16 20:59:05.164209', 2, 4),
+(15, 'Hi', 0, '2020-02-16 21:04:34.865765', 10, 2);
 
 -- --------------------------------------------------------
 
@@ -282,8 +284,8 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('7u7sse573sg051vtbg5a2d9zcylccev9', 'MzkzNmIzNTRhZWIwMjMzNGUxOTE1NTZlMGVmZDk1NWZiNjI0Yzk5Zjp7InVzZXIiOjF9', '2020-03-01 10:41:01.532129'),
-('aeaswkpv13m1ett5zmc33onqqsn7ps7k', 'N2U2ZGI1ZGVhNDFkZTk3MDQ5ZGEzYTJlOGFmNmRjNjdmNjZhYzg5Mzp7InVzZXIiOjJ9', '2020-03-01 09:28:49.827211'),
+('27hw3q3uz5xnztl40daedkumlpktuzfg', 'MzkzNmIzNTRhZWIwMjMzNGUxOTE1NTZlMGVmZDk1NWZiNjI0Yzk5Zjp7InVzZXIiOjF9', '2020-03-01 15:22:08.253971'),
+('uvh65krwue5d2p09xjmza9by78cseanx', 'N2U2ZGI1ZGVhNDFkZTk3MDQ5ZGEzYTJlOGFmNmRjNjdmNjZhYzg5Mzp7InVzZXIiOjJ9', '2020-03-01 15:15:54.258181'),
 ('xii2m0ntj35ifflt31soc5mri3v7oc5v', 'N2U2ZGI1ZGVhNDFkZTk3MDQ5ZGEzYTJlOGFmNmRjNjdmNjZhYzg5Mzp7InVzZXIiOjJ9', '2020-02-29 09:23:30.357628');
 
 -- --------------------------------------------------------
@@ -319,9 +321,9 @@ INSERT INTO `follows` (`id`, `status`, `date`, `follower_id`, `following_id`) VA
 (13, 0, '2020-02-15 15:02:08.772016', 8, 7),
 (14, 0, '2020-02-15 15:02:11.035195', 8, 4),
 (19, 0, '2020-02-15 15:08:49.258405', 2, 7),
-(21, 0, '2020-02-15 20:26:43.296679', 2, 5),
-(22, 0, '2020-02-15 20:26:49.955812', 2, 6),
-(23, 0, '2020-02-15 23:57:10.374228', 5, 2);
+(23, 0, '2020-02-15 23:57:10.374228', 5, 2),
+(42, 0, '2020-02-16 21:06:04.079963', 2, 8),
+(43, 0, '2020-02-16 21:06:06.168069', 2, 5);
 
 -- --------------------------------------------------------
 
@@ -364,7 +366,8 @@ INSERT INTO `likes` (`id`, `status`, `date`, `post_id`, `user_id`) VALUES
 (26, 0, '2020-02-15 15:08:56.689023', 15, 2),
 (27, 0, '2020-02-15 15:08:59.511798', 12, 2),
 (28, 0, '2020-02-15 15:09:01.015866', 11, 2),
-(29, 0, '2020-02-15 23:57:15.432848', 20, 5);
+(29, 0, '2020-02-15 23:57:15.432848', 20, 5),
+(38, 0, '2020-02-16 21:04:33.253805', 10, 2);
 
 -- --------------------------------------------------------
 
@@ -468,7 +471,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `social_link
 (5, 'Hayley William', 'hayley.williams123', 'hayley@gmail.com', 'pbkdf2_sha256$180000$Io2zeJlXHY1m$c79rP8BdqmjmtxG648NQgcQ+bHIzl/pwg0AQDlIN80Q=', 'http://youtube.com/haley', 0, '1581757570.webp'),
 (6, 'Corey Taylor', 'corey.taylor', 'corey@gmail.com', 'pbkdf2_sha256$180000$H9z4nXsnAmkn$JadnkhV5FTNGDFTv70B7SAe6IXNsq1EHHtwlczATRo0=', '', 0, '1581757769.jpg'),
 (7, 'Katy Perry', 'katy.perry', 'katy@gmail.com', 'pbkdf2_sha256$180000$fdeTiyYgLeb9$F6RbnKPiPadD6NjawxSa4RXz7+DnUns3Z87r8WTZvA0=', '', 0, '1581757933.jpg'),
-(8, 'Taylor Swift', 'taylor.swift', 'taylor@gmail.com', 'pbkdf2_sha256$180000$JtAa5rxuJIpB$26bh4LarThSmyudJZbzwN4ctExeC9jQLcnwVI8nebp8=', '', 0, '1581758096.jpg');
+(8, 'Taylor Swift', 'taylor.swift', 'taylor@gmail.com', 'pbkdf2_sha256$180000$gwuz8awJ0GCy$4RECPU84pua8SqgcHMCwN+hkpJMY8JlJB0p5M1MtD3M=', '', 0, '1581758096.jpg');
 
 --
 -- Indexes for dumped tables
@@ -635,7 +638,7 @@ ALTER TABLE `auth_user_user_permissions`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `django_admin_log`
@@ -659,31 +662,31 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
